@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .team-member-details {
+            flex: 1;
+        }
+        .navbar {
+            background-color: #333;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            margin-left: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            color: #ff0000;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .nav-link {
+                margin: 10px 0;
+            }
+
+            .navbar-toggler {
+                display: block;
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: palegreen;">
+    <nav class="navbar bg-primary" data-bs-theme="dark"></nav>
+    <nav class="navbar">
+        <a class="navbar-brand" href="/HOmeWork.html">Home</a>
+        
+        <ul class="nav-links" id="nav-link">
+            <li class="nav-item"><a class="nav-link" href="/about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/sign_up.html">Sign In</a></li>
+        </ul>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search" id="searchQuery">
+            <button class="btn btn-primary" onclick="performGoogleSearch()">Search</button>
+        </div>
+    </nav>
+    <header>
+        <h1>About Us</h1>
+    </header>
+    <nav>
+        <a href="/HOmeWork.html">Home</a>
+        <a href="/sign_up.html">Sign_up</a>
+        <a href="/Contect.html">Contact</a>
+    </nav>
+    <main>
+        <h1>Our Team</h1>
+        <div class="team-member">
+            <img src="/IMG-20191018-WA0020 (1).jpg" alt="Team Member 1">
+            <div class="team-member-details">
+                <h2>Saurabh</h2>
+                <p>Co-Founder</p>
+                <p>Saurabh is the co-founder of this page. I have a passion for technology and entrepreneurship.</p>
+            </div>
+        </div>
+        
+        
+        </div>
+        <script>
+            function performGoogleSearch() {
+            const searchQuery = document.getElementById('searchQuery').value;
+            if (searchQuery.trim() !== '') {
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                window.open(googleSearchUrl, '_blank');
+            }
+        }
+        </script>
+    </main>
+    <footer class="bg-dark text-center text-white py-3">
+        <p>&copy; 2023 ToolKit. All rights reserved.</p>
+      </footer>
+</body>
+</html>

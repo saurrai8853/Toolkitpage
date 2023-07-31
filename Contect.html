@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .navbar {
+            background-color: #333;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            margin-left: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            color: #ff0000;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .nav-link {
+                margin: 10px 0;
+            }
+
+            .navbar-toggler {
+                display: block;
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 24px;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body style="background-color: pink;">
+    <nav class="navbar bg-primary" data-bs-theme="dark"></nav>
+    <nav class="navbar">
+        <a class="navbar-brand" href="/HOmeWork.html">Home</a>
+        
+        <ul class="nav-links" id="nav-link">
+            <li class="nav-item"><a class="nav-link" href="/about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/sign_up.html">Sign In</a></li>
+        </ul>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search" id="searchQuery">
+            <button class="btn btn-primary" onclick="performGoogleSearch()">Search</button>
+        </div>
+    </nav>
+    <form id="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            // You can handle the form data submission here.
+            // For demonstration purposes, let's log the form data to the console.
+            for (const pair of formData.entries()) {
+                console.log(pair[0] + ": " + pair[1]);
+            }
+
+            // Display success message (you can redirect to a thank you page if needed)
+            const successMessage = document.createElement("p");
+            successMessage.textContent = "Thank you for your submission!";
+            successMessage.classList.add("success-message");
+            event.target.appendChild(successMessage);
+        });
+        function performGoogleSearch() {
+            const searchQuery = document.getElementById('searchQuery').value;
+            if (searchQuery.trim() !== '') {
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                window.open(googleSearchUrl, '_blank');
+            }
+        }
+    </script>
+    
+</body>
+<footer class="bg-dark text-center text-white py-5">
+    <p>&copy; 2023 ToolKit. All rights reserved.</p>
+  </footer>
+</html>

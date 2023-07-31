@@ -1,0 +1,26 @@
+.glyphiconglyphicon-pencil{
+    background-color: aqua;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: pink;
+}
+.play{
+    text-align: center;
+    border: 0cqmin;
+    color:bisque;
+    font: bold;
+    font-size: large;
+    font-style: italic;
+    font-display: initial;
+    background: #000;
+}
+.saur{
+    list-style-type: georgian;
+    display: flexbox;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    margin: 2%;
+    padding: auto;
+    color: blue;
+    list-style-type: lower-alpha;
+    background-color: aqua;
+    
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chess Timer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .timer-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .timer-box {
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .timer-label {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .timer-display {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .timer-buttons {
+            margin-top: 30px;
+        }
+
+        .timer-buttons .btn {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 5px;
+            width: 100px;
+            text-align: center;
+        }
+
+        .timer-buttons .btn-primary {
+            background-color: green;
+            color: #fff;
+        }
+
+        .timer-buttons .btn-danger {
+            background-color: red;
+            color: #fff;
+        }
+
+        .timer-buttons .btn-secondary {
+            background-color: blue;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center">Chess Timer</h1>
+
+    <!-- Player 1 Timer -->
+    <div class="timer-container">
+        <div class="timer-box" id="stop-watch1">
+            <div class="timer-label">Player 1</div>
+            <div class="timer-display">00:00:00</div>
+            <div class="timer-buttons">
+                <button class="btn btn-primary" id="startBtn1">Start</button>
+                <button class="btn btn-danger" id="stopBtn1" disabled>Stop</button>
+                <button class="btn btn-secondary" id="resetBtn1" disabled>Reset</button>
+            </div>
+            <div class="timer-buttons">
+                <label for="player1Time">Set Time (Minutes):</label>
+                <input type="number" id="player1Time" class="form-control" min="1" max="60">
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Player 2 Timer -->
+    <div class="timer-container">
+        <div class="timer-box" id="stop-watch2">
+            <div class="timer-label">Player 2</div>
+            <div class="timer-display">00:00:00</div>
+            <div class="timer-buttons">
+                <button class="btn btn-primary" id="startBtn2">Start</button>
+                <button class="btn btn-danger" id="stopBtn2" disabled>Stop</button>
+                <button class="btn btn-secondary" id="resetBtn2" disabled>Reset</button>
+            </div>
+            <div class="timer-buttons">
+                <label for="player2Time">Set Time (Minutes):</label>
+                <input type="number" id="player2Time" class="form-control" min="1" max="60">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 TOOLKIT Team. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let timerId1;
+        let timerId2;
+        let player1Time = 0;
+        let player2Time = 0;
+        let startTime1 = 0;
+        let startTime2 = 0;
+        let isTimerRunning1 = false;
+        let isTimerRunning2 = false;
+
+        function startTimer(player) {
+            const playerTime = player === 1 ? document.getElementById("player1Time").value : document.getElementById("player2Time").value;
+            if (playerTime > 0) {
+                const currentTime = Math.floor(Date.now() / 1000);
+                if (player === 1) {
+                    if (!isTimerRunning1) {
+                        player1Time = Number(playerTime) * 60;
+                        startTime1 = currentTime;
+                        isTimerRunning1 = true;
+                    } else {
+                        player1Time -= currentTime - startTime1;
+                    }
+                    clearInterval(timerId1);
+                    timerId1 = setInterval(updateTimer, 1000, player);
+                } else if (player === 2) {
+                    if (!isTimerRunning2) {
+                        player2Time = Number(playerTime) * 60;
+                        startTime2 = currentTime;
+                        isTimerRunning2 = true;
+                    } else {
+                        player2Time -= currentTime - startTime2;
+                    }
+                    clearInterval(timerId2);
+                    timerId2 = setInterval(updateTimer, 1000, player);
+                }
+                document.getElementById(`startBtn${player}`).disabled = true;
+                document.getElementById(`stopBtn${player}`).disabled = false;
+                document.getElementById(`resetBtn${player}`).disabled = true;
+            }
+        }
+
+        function stopTimer(player) {
+            const currentTime = Math.floor(Date.now() / 1000);
+            if (player === 1 && isTimerRunning1) {
+                player1Time -= currentTime - startTime1;
+                startTime1 = 0;
+                isTimerRunning1 = false;
+            } else if (player === 2 && isTimerRunning2) {
+                player2Time -= currentTime - startTime2;
+                startTime2 = 0;
+                isTimerRunning2 = false;
+            }
+            clearInterval(timerId1);
+            clearInterval(timerId2);
+            document.getElementById(`startBtn${player}`).disabled = false;
+            document.getElementById(`stopBtn${player}`).disabled = true;
+            document.getElementById(`resetBtn${player}`).disabled = false;
+        }
+
+        function resetTimer(player) {
+            clearInterval(timerId1);
+            clearInterval(timerId2);
+            if (player === 1) {
+                player1Time = 0;
+                startTime1 = 0;
+                isTimerRunning1 = false;
+                document.getElementById("player1Time").value = "";
+                document.getElementById(`stop-watch${player} .timer-display`).textContent = "00:00:00";
+            } else if (player === 2) {
+                player2Time = 0;
+                startTime2 = 0;
+                isTimerRunning2 = false;
+                document.getElementById("player2Time").value = "";
+                document.getElementById(`stop-watch${player} .timer-display`).textContent = "00:00:00";
+            }
+            document.getElementById(`startBtn${player}`).disabled = false;
+            document.getElementById(`stopBtn${player}`).disabled = true;
+            document.getElementById(`resetBtn${player}`).disabled = true;
+        }
+
+        function updateTimer(player) {
+            if (player === 1 && isTimerRunning1) {
+                if (player1Time <= 0) {
+                    stopTimer(player);
+                    return;
+                }
+                const hours = Math.floor(player1Time / 3600);
+                const minutes = Math.floor((player1Time % 3600) / 60);
+                const seconds = player1Time % 60;
+                document.querySelector(`#stop-watch${player} .timer-display`).textContent =
+                    `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+            } else if (player === 2 && isTimerRunning2) {
+                if (player2Time <= 0) {
+                    stopTimer(player);
+                    return;
+                }
+                const hours = Math.floor(player2Time / 3600);
+                const minutes = Math.floor((player2Time % 3600) / 60);
+                const seconds = player2Time % 60;
+                document.querySelector(`#stop-watch${player} .timer-display`).textContent =
+                    `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+            }
+        }
+
+        document.getElementById("startBtn1").addEventListener("click", () => startTimer(1));
+        document.getElementById("stopBtn1").addEventListener("click", () => stopTimer(1));
+        document.getElementById("resetBtn1").addEventListener("click", () => resetTimer(1));
+
+        document.getElementById("startBtn2").addEventListener("click", () => startTimer(2));
+        document.getElementById("stopBtn2").addEventListener("click", () => stopTimer(2));
+        document.getElementById("resetBtn2").addEventListener("click", () => resetTimer(2));
+    </script>
+</body>
+</html>

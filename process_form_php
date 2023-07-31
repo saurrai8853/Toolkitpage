@@ -1,0 +1,35 @@
+<?php
+$servername = "localhost";
+$username = "root"; // Replace with your MySQL username
+$password = "root"; // Replace with your MySQL password
+$dbname = "VSCodeData"; // Replace with your database name
+
+// Create a connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["inputEmail4"];
+    $password = $_POST["inputPassword4"];
+    $address = $_POST["inputAddress"];
+    $address2 = $_POST["inputAddress2"];
+    $city = $_POST["inputCity"];
+    $state = $_POST["inputState"];
+    $zip = $_POST["inputZip"];
+
+    // Insert form data into the database
+    $sql = "INSERT INTO form_data (email, password, address, address2, city, state, zip) 
+            VALUES ('$email', '$password', '$address', '$address2', '$city', '$state', '$zip')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Form data stored successfully!";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+$conn->close();
+?>
